@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amudi Foods — Admin Portal</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <style>
+/* ============================================
+   Amudi Foods B2B Platform — Design System
+   Primary: #157540 | Modern, 2026-style
+   ============================================ */
+
+/* --- CSS Custom Properties --- */
+:root {
+  --primary: #157540;
+  --primary-dark: #0f5a30;
+  --primary-light: #e8f5ee;
+  --primary-lighter: #f0faf4;
+
+  --text-dark: #09090b;
+  --text-medium: #27272a;
+  --text-light: #71717a;
+
+  --bg-white: #ffffff;
+  --bg-off-white: #fafafa;
+  --bg-light: #f4f4f5;
+
+  --border: #e4e4e7;
+  --border-light: #f4f4f5;
+
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+
+  --success: #157540;
+  --success-light: #dcfce7;
+
+  --info: #0ea5e9;
+  --info-light: #e0f2fe;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Reset / Normalize --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-family);
+  color: var(--text-dark);
+  background: var(--bg-off-white);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: var(--primary); text-decoration: none; transition: var(--transition); }
+a:hover { color: var(--primary-dark); }
+img { max-width: 100%; height: auto; display: block; }
+ul, ol { list-style: none; }
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  outline: none;
+}
+table { border-collapse: collapse; width: 100%; }
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; color: var(--text-dark); margin-bottom: 0.75rem; }
+h1 { font-size: 2.25rem; letter-spacing: -0.025em; }
+h2 { font-size: 1.875rem; letter-spacing: -0.025em; }
+h3 { font-size: 1.5rem; letter-spacing: -0.025em; }
+h4 { font-size: 1.25rem; }
+p { margin-bottom: 1rem; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-muted { color: var(--text-light); }
+.text-medium { color: var(--text-medium); }
+.text-primary { color: var(--primary); }
+.text-danger { color: var(--danger); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-normal { font-weight: 400; }
+
+/* --- Layout --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.container-sm { max-width: 480px; margin: 0 auto; padding: 0 1rem; }
+.container-md { max-width: 720px; margin: 0 auto; padding: 0 1rem; }
+.container-lg { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+.container-xl { max-width: 1400px; margin: 0 auto; padding: 0 1rem; }
+.page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+.page-content { flex: 1; padding: 1.5rem 0; }
+
+/* Flex */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+.gap-xs { gap: 0.25rem; }
+.gap-sm { gap: 0.5rem; }
+.gap-md { gap: 1rem; }
+.gap-lg { gap: 1.5rem; }
+.gap-xl { gap: 2rem; }
+.flex-1 { flex: 1; }
+
+/* Grid */
+.grid { display: grid; gap: 1rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* --- Spacing Utilities --- */
+.mt-0 { margin-top: 0; } .mt-1 { margin-top: 0.5rem; } .mt-2 { margin-top: 1rem; } .mt-3 { margin-top: 1.5rem; } .mt-4 { margin-top: 2rem; }
+.mb-0 { margin-bottom: 0; } .mb-1 { margin-bottom: 0.5rem; } .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; }
+.ml-1 { margin-left: 0.5rem; } .mr-1 { margin-right: 0.5rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.p-0 { padding: 0; } .p-1 { padding: 0.5rem; } .p-2 { padding: 1rem; } .p-3 { padding: 1.5rem; } .p-4 { padding: 2rem; }
+.px-1 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-2 { padding-left: 1rem; padding-right: 1rem; }
+.py-1 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-2 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-3 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+
+/* --- Display Utilities --- */
+.hidden { display: none !important; }
+.block { display: block; }
+.inline-block { display: inline-block; }
+.w-100 { width: 100%; }
+.overflow-hidden { overflow: hidden; }
+.cursor-pointer { cursor: pointer; }
+
+/* --- Navigation Bar --- */
+.navbar {
+  background: var(--primary);
+  color: white;
+  padding: 0 1rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navbar-brand:hover { color: white; text-decoration: none; }
+.navbar-brand img { height: 36px; width: auto; }
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.navbar-nav a, .navbar-nav button {
+  color: rgba(255,255,255,0.85);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.navbar-nav a:hover, .navbar-nav button:hover,
+.navbar-nav a.active {
+  color: white;
+  background: rgba(255,255,255,0.15);
+  text-decoration: none;
+}
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.875rem;
+}
+.navbar-toggle {
+  display: block;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.btn:hover { opacity: 0.9; }
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary {
+  background: var(--bg-light);
+  color: var(--text-dark);
+  border-color: var(--border);
+}
+.btn-secondary:hover { background: var(--border); }
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-danger:hover { background: #b91c1c; }
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.btn-outline:hover { background: var(--primary-light); }
+.btn-outline-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--danger);
+}
+.btn-outline-danger:hover { background: var(--danger-light); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-medium);
+}
+.btn-ghost:hover { background: var(--bg-light); }
+.btn-sm { padding: 0.5rem 0.75rem; font-size: 0.85rem; }
+.btn-lg { padding: 1rem 1.5rem; font-size: 1.1rem; }
+.btn-block { width: 100%; }
+
+/* --- Forms --- */
+.form-group { margin-bottom: 1.25rem; }
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-medium);
+  margin-bottom: 0.5rem;
+}
+.form-label .required { color: var(--danger); margin-left: 2px; }
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-white);
+  color: var(--text-dark);
+  transition: var(--transition);
+}
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+.form-control::placeholder { color: var(--text-light); }
+.form-control:disabled {
+  background: var(--bg-light);
+  cursor: not-allowed;
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-body { padding: 1.25rem; }
+.card-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+/* --- Tables --- */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.table { width: 100%; border-collapse: collapse; }
+.table th {
+  background: var(--bg-light);
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+.table tbody tr:hover { background: var(--bg-off-white); }
+/* Mobile Table Responsiveness */
+@media (max-width: 768px) {
+  .table-responsive {
+    border: none;
+  }
+  .table thead {
+    display: none;
+  }
+  .table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-white);
+  }
+  .table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+    text-align: right;
+  }
+  .table tbody td:last-child {
+    border-bottom: none;
+  }
+  .table tbody td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--text-medium);
+    text-align: left;
+    padding-right: 1rem;
+  }
+}
+
+  flex-wrap: nowrap;
+}
+
+/* --- Badges --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+.badge-primary { background: var(--primary-light); color: var(--primary); }
+.badge-success { background: var(--success-light); color: var(--success); }
+.badge-danger { background: var(--danger-light); color: var(--danger); }
+.badge-warning { background: var(--warning-light); color: #856404; }
+.badge-info { background: var(--info-light); color: var(--info); }
+.badge-secondary { background: var(--bg-light); color: var(--text-medium); }
+
+/* --- Alerts --- */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.alert-success { background: var(--success-light); color: #0a5c2a; border: 1px solid #b7e4c7; }
+.alert-danger { background: var(--danger-light); color: #842029; border: 1px solid #f5c2c7; }
+.alert-warning { background: var(--warning-light); color: #664d03; border: 1px solid #ffe69c; }
+.alert-info { background: var(--info-light); color: #084298; border: 1px solid #b6d4fe; }
+
+/* --- Modal --- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.25s ease;
+}
+.modal-lg { max-width: 720px; }
+.modal-sm { max-width: 400px; }
+.modal-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: var(--bg-white);
+  z-index: 1;
+}
+.modal-header h3 { margin: 0; font-size: 1.1rem; }
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+.modal-close:hover { color: var(--text-dark); }
+.modal-body { padding: 1.25rem; }
+.modal-footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* --- Toast --- */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+.toast {
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.toast-success { background: var(--primary); color: white; }
+.toast-error { background: var(--danger); color: white; }
+.toast-warning { background: var(--warning); color: #333; }
+.toast-info { background: var(--info); color: white; }
+
+/* --- Loading Spinner --- */
+.loading-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.8);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+}
+.loading-overlay.active { display: flex; }
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.spinner-sm { width: 20px; height: 20px; border-width: 2px; }
+.spinner-inline {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+/* --- Stat Cards (Admin Dashboard) --- */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+.stat-card-label {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+}
+.stat-card-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* --- Tabs (Admin Portal) --- */
+.admin-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+.admin-tab {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-medium);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  white-space: nowrap;
+  transition: var(--transition);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.admin-tab:hover { color: var(--primary); }
+.admin-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* --- Search / Filter Bar --- */
+.search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+.search-input input {
+  padding-left: 2.25rem;
+}
+.search-input::before {
+  content: '🔍';
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  z-index: 1;
+}
+
+/* --- Toggle Switch --- */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--border);
+  border-radius: 24px;
+  transition: var(--transition);
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+.toggle input:checked + .toggle-slider { background: var(--primary); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* --- Divider --- */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 1.5rem 0;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- View Sections (SPA navigation) --- */
+.view { display: none; }
+.view.active { display: block; }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.25rem; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .form-row { flex-direction: column; gap: 0; }
+  .stat-cards { grid-template-columns: repeat(2, 1fr); }
+  .container { padding: 0 0.75rem; }
+  .page-content { padding: 1rem 0; }
+  .auth-card { padding: 1.75rem; }
+  .modal { margin: 0.5rem; max-height: 95vh; }
+  .table-responsive { font-size: 0.825rem; }
+  .search-bar { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .stat-cards { grid-template-columns: 1fr; }
+  .auth-card { padding: 1.25rem; }
+  .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+}
+
+@media print {
+  .navbar, .toast-container, .loading-overlay, .modal-overlay, .btn { display: none !important; }
+  body { background: white; }
+  .card { box-shadow: none; border: 1px solid #ccc; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ============================================ -->
+  <!-- 1. ADMIN LOGIN VIEW                          -->
+  <!-- ============================================ -->
+  <div id="view-login" class="view auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <span style="font-size: 2.5rem;">⚙️</span>
+        <h1>Amudi Foods</h1>
+        <p>Admin & Operations Portal</p>
+      </div>
+
+      <div id="login-error" class="alert alert-danger hidden"></div>
+
+      <form id="form-admin-login" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="admin-user">Username / Email <span class="required">*</span></label>
+          <input type="text" id="admin-user" class="form-control" placeholder="admin@amudifoods.com.np" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="admin-pass">Password <span class="required">*</span></label>
+          <input type="password" id="admin-pass" class="form-control" placeholder="Enter password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg mt-2" id="btn-admin-login">
+          Sign In to Admin
+        </button>
+      </form>
+
+      <div class="text-center mt-3" style="border-top: 1px solid var(--border-light); padding-top: 1rem;">
+        <p class="text-xs text-muted">
+          🔒 Internal operations use only. Authorized personnel.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- 2. ADMIN DASHBOARD CONTAINER                 -->
+  <!-- ============================================ -->
+  <div id="app-container" class="page-wrapper hidden">
+
+    <!-- Top Navbar -->
+    <nav class="navbar">
+      <a href="#" class="navbar-brand" onclick="switchTab('orders'); return false;">
+        <span>🌿</span> Amudi Foods <span class="badge badge-warning" style="font-size: 0.7rem; margin-left: 6px;">ADMIN</span>
+      </a>
+      <button class="navbar-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">☰</button>
+      <div class="navbar-nav" id="admin-navbar-nav">
+        <span class="navbar-user" id="admin-user-display">Admin Staff</span>
+        <button onclick="handleAdminLogout()" class="text-muted" style="font-size: 0.85rem;">Logout</button>
+      </div>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="page-content">
+      <div class="container container-xl">
+
+        <!-- Navigation Tabs -->
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-tab="orders" onclick="switchTab('orders')">📦 Orders Dashboard</button>
+          <button class="admin-tab" data-tab="buyers" onclick="switchTab('buyers')">👥 Buyer Accounts</button>
+          <button class="admin-tab" data-tab="products" onclick="switchTab('products')">🍿 Products & Categories</button>
+          <button class="admin-tab" data-tab="settings" onclick="switchTab('settings')">⚙️ Checkout Settings</button>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 1: ORDERS DASHBOARD                      -->
+        <!-- ============================================ -->
+        <div id="tab-orders" class="admin-tab-content">
+          <!-- Stats -->
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="stat-card-label">Total Orders</div>
+              <div class="stat-card-value" id="stat-total-orders">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-label">Total Cartons Ordered</div>
+              <div class="stat-card-value" id="stat-total-cartons">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-label">Active Buyers</div>
+              <div class="stat-card-value" id="stat-active-buyers">0</div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="flex justify-between items-center mb-2">
+            <h3>Live Order Stream</h3>
+            <button class="btn btn-secondary btn-sm" onclick="loadOrders()">🔄 Refresh Orders</button>
+          </div>
+
+          <div class="search-bar">
+            <div class="search-input">
+              <input type="text" id="order-search" class="form-control" placeholder="Search by Order ID, Buyer, Business, or Phone..." oninput="filterOrders()">
+            </div>
+          </div>
+
+          <!-- Orders Table -->
+          <div class="table-responsive">
+            <table class="table" id="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date & Time</th>
+                  <th>Buyer / Business</th>
+                  <th>Contact</th>
+                  <th>Items Summary</th>
+                  <th>Delivery Address</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="orders-empty" class="empty-state hidden">
+            <div class="empty-state-icon">📭</div>
+            <h3>No orders received yet</h3>
+            <p>New orders placed by buyers will appear here in real-time.</p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 2: BUYER ACCOUNTS MANAGEMENT             -->
+        <!-- ============================================ -->
+        <div id="tab-buyers" class="admin-tab-content hidden">
+          <div class="flex justify-between items-center mb-2">
+            <div>
+              <h3>Registered Buyer Accounts</h3>
+              <p class="text-xs text-muted">Manage buyer access and credentials. Buyers cannot self-register.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddBuyerModal()">+ Add New Buyer</button>
+          </div>
+
+          <div class="search-bar">
+            <div class="search-input">
+              <input type="text" id="buyer-search" class="form-control" placeholder="Search buyers by name, email, firm..." oninput="filterBuyers()">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Contact Person</th>
+                  <th>Business / Firm</th>
+                  <th>Email (Username)</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="buyers-tbody">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="buyers-empty" class="empty-state hidden">
+            <div class="empty-state-icon">👥</div>
+            <h3>No buyers registered</h3>
+            <p>Click "Add New Buyer" to create the first buyer account.</p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 3: PRODUCTS & CATEGORIES                 -->
+        <!-- ============================================ -->
+        <div id="tab-products" class="admin-tab-content hidden">
+          <!-- Category Section -->
+          <div class="card mb-4">
+            <div class="card-header">
+              <span>Category Management</span>
+              <button class="btn btn-sm btn-outline" onclick="openAddCategoryModal()">+ Add Category</button>
+            </div>
+            <div class="card-body">
+              <div class="flex flex-wrap gap-sm" id="categories-pill-list">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Products Section -->
+          <div class="flex justify-between items-center mb-2">
+            <div>
+              <h3>Product Catalog</h3>
+              <p class="text-xs text-muted">Manage product variants, sizes, carton packings, MOQs, and visibility.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddProductModal()">+ Add New Product</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Sizes / Variants</th>
+                  <th>Product Visibility</th>
+                  <th>Stock Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div id="products-empty" class="empty-state hidden">
+            <div class="empty-state-icon">🍿</div>
+            <h3>No products added yet</h3>
+            <p>Click "Add New Product" to populate your catalog.</p>
+          </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 4: CHECKOUT SETTINGS                     -->
+        <!-- ============================================ -->
+        <div id="tab-settings" class="admin-tab-content hidden">
+          <div class="card mb-3">
+            <div class="card-header">
+              <span>Dynamic Checkout Questions</span>
+              <button class="btn btn-primary btn-sm" onclick="openAddQuestionModal()">+ Add Question</button>
+            </div>
+            <div class="card-body">
+              <p class="text-sm text-muted mb-2">
+                These questions will render dynamically on the buyer's checkout screen. Use them for additional delivery instructions, preferred slots, PO numbers, etc.
+              </p>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Question Label</th>
+                      <th>Type</th>
+                      <th>Options (if dropdown)</th>
+                      <th>Required</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="questions-tbody">
+                    <!-- Rendered by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="questions-empty" class="empty-state hidden">
+                <p class="text-muted">No custom questions configured. The checkout form will only show standard contact/address fields.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backend Integration Status -->
+          <div class="card">
+            <div class="card-header">Backend Integration Status</div>
+            <div class="card-body">
+              <div class="flex items-center gap-sm mb-2">
+                <span class="badge badge-success">✓ Live Production Connected</span>
+                <span class="text-xs text-muted">Google Sheets DB & Gmail Automations Active</span>
+              </div>
+              <p class="text-xs text-muted">
+                Order data is logged in real-time to Google Sheet ID <code>14htQ-b0rYEPyIYR1nBRKohIOdI_-Qfx0Oiwuhniwam8</code> and email alerts are sent to <code>orders@amudifoods.com.np</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- MODALS                                       -->
+  <!-- ============================================ -->
+
+  <!-- Modal: Add / Edit Buyer -->
+  <div id="modal-buyer" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-buyer-title">Add Buyer Account</h3>
+        <button class="modal-close" onclick="hideModal('modal-buyer')">&times;</button>
+      </div>
+      <form id="form-buyer" onsubmit="handleSaveBuyer(event)">
+        <div class="modal-body">
+          <input type="hidden" id="buyer-id">
+          <div class="form-group">
+            <label class="form-label" for="buyer-email">Buyer Email (Login Username) <span class="required">*</span></label>
+            <input type="email" id="buyer-email" class="form-control" required placeholder="buyer@company.com">
+            <div class="form-hint">The admin will assign a password that will be emailed to this address.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="buyer-password">Password <span class="required">*</span></label>
+            <input type="password" id="buyer-password" class="form-control" required placeholder="Enter secure password">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="buyer-password-confirm">Confirm Password <span class="required">*</span></label>
+            <input type="password" id="buyer-password-confirm" class="form-control" required placeholder="Re-enter password">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="buyer-name">Contact Person <span class="required">*</span></label>
+              <input type="text" id="buyer-name" class="form-control" required placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="buyer-business">Business / Firm Name <span class="required">*</span></label>
+              <input type="text" id="buyer-business" class="form-control" required placeholder="Company name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="buyer-phone">Phone Number <span class="required">*</span></label>
+            <input type="tel" id="buyer-phone" class="form-control" required placeholder="10-digit number" maxlength="10">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="buyer-address">Default Delivery Address</label>
+            <textarea id="buyer-address" class="form-control" rows="2" placeholder="Full address"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('modal-buyer')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-buyer">Save Buyer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Product -->
+  <div id="modal-product" class="modal-overlay">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="modal-product-title">Add Product</h3>
+        <button class="modal-close" onclick="hideModal('modal-product')">&times;</button>
+      </div>
+      <form id="form-product" onsubmit="handleSaveProduct(event)">
+        <div class="modal-body">
+          <input type="hidden" id="product-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="product-name">Product Name <span class="required">*</span></label>
+              <input type="text" id="product-name" class="form-control" required placeholder="e.g., Cheese Balls">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="product-category">Category <span class="required">*</span></label>
+              <select id="product-category" class="form-control" required>
+                <!-- Filled dynamically -->
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="product-image">Thumbnail Image URL</label>
+            <input type="url" id="product-image" class="form-control" placeholder="https://example.com/image.jpg (optional)">
+            <div class="form-hint">Leave blank to use auto-generated product badge image.</div>
+          </div>
+
+          <div id="product-sizes-section">
+            <div class="flex justify-between items-center mb-1">
+              <label class="form-label font-bold">Pack Variants / Carton Sizes</label>
+              <button type="button" class="btn btn-sm btn-outline" onclick="addProductSizeRow()">+ Add Size</button>
+            </div>
+            <div id="product-sizes-container">
+              <!-- Dynamically populated size rows -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('modal-product')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-product">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Manage Sizes for a Product -->
+  <div id="modal-manage-sizes" class="modal-overlay">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <div>
+          <h3>Manage Sizes & Carton Specs</h3>
+          <p class="text-xs text-muted" id="manage-sizes-product-name"></p>
+        </div>
+        <button class="modal-close" onclick="hideModal('modal-manage-sizes')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="manage-sizes-product-id">
+
+        <!-- Add Size Subform -->
+        <div class="card p-2 mb-3" style="background:var(--bg-off-white);">
+          <div class="font-bold text-sm mb-1">Add New Size Variant</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label text-xs">Pack Description</label>
+              <input type="text" id="new-size-pack" class="form-control" placeholder="e.g., 40gm/pkt">
+            </div>
+            <div class="form-group">
+              <label class="form-label text-xs">Units / Carton</label>
+              <input type="number" id="new-size-units" class="form-control" placeholder="e.g., 40" min="1">
+            </div>
+            <div class="form-group">
+              <label class="form-label text-xs">MOQ (Cartons)</label>
+              <input type="number" id="new-size-moq" class="form-control" placeholder="e.g., 5" min="1" value="1">
+            </div>
+            <div class="form-group" style="align-self: flex-end;">
+              <button type="button" class="btn btn-primary btn-block" onclick="handleAddSingleSize()">Add Size</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sizes Table -->
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Pack Spec</th>
+                <th>Units / Carton</th>
+                <th>MOQ (Cartons)</th>
+                <th>Visible</th>
+                <th>In Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="manage-sizes-tbody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="hideModal('modal-manage-sizes')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Category Add / Edit -->
+  <div id="modal-category" class="modal-overlay">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3 id="modal-category-title">Add Category</h3>
+        <button class="modal-close" onclick="hideModal('modal-category')">&times;</button>
+      </div>
+      <form id="form-category" onsubmit="handleSaveCategory(event)">
+        <div class="modal-body">
+          <input type="hidden" id="category-id">
+          <div class="form-group">
+            <label class="form-label" for="category-name">Category Name <span class="required">*</span></label>
+            <input type="text" id="category-name" class="form-control" required placeholder="e.g., Extruded Snacks">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('modal-category')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Question -->
+  <div id="modal-question" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-question-title">Add Checkout Question</h3>
+        <button class="modal-close" onclick="hideModal('modal-question')">&times;</button>
+      </div>
+      <form id="form-question" onsubmit="handleSaveQuestion(event)">
+        <div class="modal-body">
+          <input type="hidden" id="question-id">
+          <div class="form-group">
+            <label class="form-label" for="question-label">Question Label <span class="required">*</span></label>
+            <input type="text" id="question-label" class="form-control" required placeholder="e.g., Preferred Delivery Time Slot">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="question-type">Input Type <span class="required">*</span></label>
+            <select id="question-type" class="form-control" onchange="toggleQuestionOptions()">
+              <option value="text">Text Input</option>
+              <option value="dropdown">Dropdown Selection</option>
+            </select>
+          </div>
+          <div class="form-group hidden" id="question-options-group">
+            <label class="form-label" for="question-options">Dropdown Options (comma-separated)</label>
+            <input type="text" id="question-options" class="form-control" placeholder="Morning (9-12), Afternoon (12-4), Evening (4-7)">
+          </div>
+          <div class="form-check mt-2">
+            <input type="checkbox" id="question-required">
+            <label for="question-required" class="text-sm">Mandatory field (buyer cannot place order without answering)</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('modal-question')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Question</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Order -->
+  <div id="modal-edit-order" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Edit Order Buyer Details</h3>
+        <button class="modal-close" onclick="hideModal('modal-edit-order')">&times;</button>
+      </div>
+      <form id="form-edit-order" onsubmit="handleSaveOrderEdit(event)">
+        <div class="modal-body">
+          <input type="hidden" id="edit-order-id">
+          <div class="form-group">
+            <label class="form-label" for="edit-order-name">Contact Person</label>
+            <input type="text" id="edit-order-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-order-business">Business Name</label>
+            <input type="text" id="edit-order-business" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-order-phone">Phone Number</label>
+            <input type="tel" id="edit-order-phone" class="form-control" required maxlength="10">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-order-address">Delivery Address</label>
+            <textarea id="edit-order-address" class="form-control" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('modal-edit-order')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT: Utilities, API Client & Logic    -->
+  <!-- ============================================ -->
+  <script>
+    /* --- Production Google Apps Script Web App Endpoint --- */
+    const API_URL = 'https://script.google.com/macros/s/AKfycbz8d4H2_2SWA0V6HJsZD0B5OBjDu7tNmR7Tbpg_yKL-IhWuuYhi5WK3DpzV-GKUK0zi/exec';
+
+    /* --- Shared Utilities --- */
+    function showToast(message, type = 'info') {
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+      }
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
+      toast.innerHTML = `<span>${icons[type] || ''}</span> <span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
+    }
+
+    function showModal(modalId) {
+      const overlay = document.getElementById(modalId);
+      if (overlay) overlay.classList.add('active');
+    }
+
+    function hideModal(modalId) {
+      const overlay = document.getElementById(modalId);
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        e.target.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+      }
+    });
+
+    function showLoading() {
+      let overlay = document.getElementById('loading-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'loading-overlay';
+        overlay.className = 'loading-overlay';
+        overlay.innerHTML = '<div class="spinner"></div>';
+        document.body.appendChild(overlay);
+      }
+      overlay.classList.add('active');
+    }
+
+    function hideLoading() {
+      const overlay = document.getElementById('loading-overlay');
+      if (overlay) overlay.classList.remove('active');
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return '—';
+      const d = new Date(dateString);
+      return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function validatePhone(phone) {
+      return /^\d{10}$/.test(phone.replace(/[\s\-\+]/g, '').replace(/^91/, ''));
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function getAuthToken() {
+      return localStorage.getItem('amudi_auth_token');
+    }
+
+    function setAuthToken(token, role) {
+      localStorage.setItem('amudi_auth_token', token);
+      localStorage.setItem('amudi_auth_role', role);
+    }
+
+    function getAuthRole() {
+      return localStorage.getItem('amudi_auth_role');
+    }
+
+    function clearAuth() {
+      localStorage.removeItem('amudi_auth_token');
+      localStorage.removeItem('amudi_auth_role');
+      localStorage.removeItem('amudi_current_user');
+    }
+
+    function confirmAction(message) {
+      return new Promise((resolve) => {
+        let overlay = document.getElementById('confirm-modal');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'confirm-modal';
+          overlay.className = 'modal-overlay';
+          overlay.innerHTML = `
+            <div class="modal modal-sm">
+              <div class="modal-header">
+                <h3>Confirm</h3>
+              </div>
+              <div class="modal-body">
+                <p id="confirm-message"></p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+                <button class="btn btn-primary" id="confirm-ok">Confirm</button>
+              </div>
+            </div>`;
+          document.body.appendChild(overlay);
+        }
+        document.getElementById('confirm-message').textContent = message;
+        overlay.classList.add('active');
+
+        const cleanup = (result) => {
+          overlay.classList.remove('active');
+          document.getElementById('confirm-ok').onclick = null;
+          document.getElementById('confirm-cancel').onclick = null;
+          resolve(result);
+        };
+        document.getElementById('confirm-ok').onclick = () => cleanup(true);
+        document.getElementById('confirm-cancel').onclick = () => cleanup(false);
+      });
+    }
+
+    function getPlaceholderImage(productName) {
+      const colors = ['#e8f5ee', '#e3f2fd', '#fff3e0', '#fce4ec', '#f3e5f5', '#e8eaf6'];
+      const hash = (productName || 'P').split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+      const color = colors[hash % colors.length];
+      const initial = (productName || 'P').charAt(0).toUpperCase();
+      return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="240" height="180" viewBox="0 0 240 180"><rect width="240" height="180" fill="${color}"/><text x="120" y="100" font-family="Arial,sans-serif" font-size="48" font-weight="bold" fill="#157540" text-anchor="middle">${initial}</text></svg>`)}`;
+    }
+
+    /* --- Core Production API Client --- */
+    async function apiCall(action, data = {}) {
+      const token = getAuthToken();
+      const payload = { action, ...data };
+      if (token) payload.token = token;
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+          redirect: 'follow'
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server returned HTTP ${response.status}`);
+        }
+
+        const result = await response.json();
+        if (!result.success && result.error === 'UNAUTHORIZED') {
+          clearAuth();
+          window.location.reload();
+        }
+        return result;
+      } catch (err) {
+        console.error(`API call failed [${action}]:`, err);
+        return {
+          success: false,
+          error: 'Network or server error. Please check your internet connection or try again later.'
+        };
+      }
+    }
+
+    const adminLogin = (username, password) => apiCall('adminLogin', { username, password });
+    const getOrders = (role) => apiCall('getOrders', { role: 'admin' });
+    const updateOrder = (orderId, buyerData) => apiCall('updateOrder', { orderId, buyerData });
+    const deleteOrder = (orderId) => apiCall('deleteOrder', { orderId });
+    const getBuyers = () => apiCall('getBuyers');
+    const createBuyer = (buyerData) => apiCall('createBuyer', { buyerData });
+    const updateBuyer = (buyerId, buyerData) => apiCall('updateBuyer', { buyerId, buyerData });
+    const deactivateBuyer = (buyerId) => apiCall('deactivateBuyer', { buyerId });
+    const activateBuyer = (buyerId) => apiCall('activateBuyer', { buyerId });
+    const resendPassword = (buyerId) => apiCall('resendPassword', { buyerId });
+    const getProducts = (role) => apiCall('getProducts', { role: 'admin' });
+    const addProduct = (productData) => apiCall('addProduct', { productData });
+    const updateProduct = (productId, productData) => apiCall('updateProduct', { productId, productData });
+    const deleteProduct = (productId) => apiCall('deleteProduct', { productId });
+    const toggleProductVisibility = (productId) => apiCall('toggleProductVisibility', { productId });
+    const toggleProductStock = (productId) => apiCall('toggleProductStock', { productId });
+    const addSize = (productId, sizeData) => apiCall('addSize', { productId, sizeData });
+    const toggleSizeVisibility = (productId, sizeId) => apiCall('toggleSizeVisibility', { productId, sizeId });
+    const toggleSizeStock = (productId, sizeId) => apiCall('toggleSizeStock', { productId, sizeId });
+    const deleteSize = (productId, sizeId) => apiCall('deleteSize', { productId, sizeId });
+    const getCategories = () => apiCall('getCategories');
+    const addCategory = (name) => apiCall('addCategory', { name });
+    const updateCategory = (categoryId, name) => apiCall('updateCategory', { categoryId, name });
+    const deleteCategory = (categoryId) => apiCall('deleteCategory', { categoryId });
+    const getQuestions = () => apiCall('getQuestions');
+    const addQuestion = (questionData) => apiCall('addQuestion', { questionData });
+    const updateQuestion = (questionId, questionData) => apiCall('updateQuestion', { questionId, questionData });
+    const deleteQuestion = (questionId) => apiCall('deleteQuestion', { questionId });
+
+    /* --- Admin Portal State --- */
+    let state = {
+      orders: [],
+      buyers: [],
+      products: [],
+      categories: [],
+      questions: [],
+      currentTab: 'orders'
+    };
+
+    /* --- Initialization --- */
+    document.addEventListener('DOMContentLoaded', () => {
+      init();
+    });
+
+    async function init() {
+      const token = getAuthToken();
+      const role = getAuthRole();
+
+      if (token && role === 'admin') {
+        showApp();
+        await loadAllData();
+        switchTab('orders');
+      } else {
+        showLogin();
+      }
+    }
+
+    function showLogin() {
+      document.getElementById('view-login').classList.add('active');
+      document.getElementById('app-container').classList.add('hidden');
+    }
+
+    function showApp() {
+      document.getElementById('view-login').classList.remove('active');
+      document.getElementById('app-container').classList.remove('hidden');
+    }
+
+    async function loadAllData() {
+      showLoading();
+      try {
+        await Promise.all([
+          loadOrders(),
+          loadBuyers(),
+          loadProducts(),
+          loadCategories(),
+          loadQuestions()
+        ]);
+        updateStats();
+      } catch (err) {
+        showToast('Error loading admin data', 'error');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    /* --- Auth Handlers --- */
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('admin-user').value.trim();
+      const pass = document.getElementById('admin-pass').value;
+      const errEl = document.getElementById('login-error');
+      const btn = document.getElementById('btn-admin-login');
+
+      errEl.classList.add('hidden');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-inline"></span> Signing in...';
+
+      const res = await adminLogin(user, pass);
+      btn.disabled = false;
+      btn.innerHTML = 'Sign In to Admin';
+
+      if (res.success) {
+        setAuthToken(res.token, 'admin');
+        showApp();
+        await loadAllData();
+        switchTab('orders');
+        showToast('Welcome, Admin!', 'success');
+      } else {
+        errEl.textContent = res.error || 'Invalid credentials.';
+        errEl.classList.remove('hidden');
+      }
+    }
+
+    function handleAdminLogout() {
+      clearAuth();
+      showLogin();
+      showToast('Logged out of Admin', 'info');
+    }
+
+    /* --- Tab Navigation --- */
+    function switchTab(tabId) {
+      state.currentTab = tabId;
+      document.querySelectorAll('.admin-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === tabId);
+      });
+      document.querySelectorAll('.admin-tab-content').forEach(c => {
+        c.classList.add('hidden');
+      });
+      const activeContent = document.getElementById(`tab-${tabId}`);
+      if (activeContent) activeContent.classList.remove('hidden');
+
+      if (tabId === 'orders') loadOrders();
+      if (tabId === 'buyers') loadBuyers();
+      if (tabId === 'products') { loadProducts(); loadCategories(); }
+      if (tabId === 'settings') loadQuestions();
+    }
+
+    function updateStats() {
+      const totalOrders = state.orders.length;
+      let totalCartons = 0;
+      state.orders.forEach(o => {
+        (o.items || []).forEach(i => { totalCartons += i.cartonsOrdered; });
+      });
+      const activeBuyers = state.buyers.filter(b => b.active).length;
+
+      document.getElementById('stat-total-orders').textContent = totalOrders;
+      document.getElementById('stat-total-cartons').textContent = totalCartons;
+      document.getElementById('stat-active-buyers').textContent = activeBuyers;
+    }
+
+    /* --- TAB 1: ORDERS --- */
+    async function loadOrders() {
+      const res = await getOrders('admin');
+      if (res.success) {
+        state.orders = res.orders || [];
+        renderOrdersTable(state.orders);
+        updateStats();
+      }
+    }
+
+    function renderOrdersTable(ordersList) {
+      const tbody = document.getElementById('orders-tbody');
+      const empty = document.getElementById('orders-empty');
+      tbody.innerHTML = '';
+
+      if (ordersList.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      ordersList.forEach(order => {
+        const tr = document.createElement('tr');
+
+        let itemsSummary = (order.items || []).map(i => `<div><strong>${escapeHtml(i.productName)}</strong> (${escapeHtml(i.sizePack)}): <span class="font-bold">${i.cartonsOrdered} ctn</span></div>`).join('');
+        let totalCartons = (order.items || []).reduce((sum, i) => sum + i.cartonsOrdered, 0);
+
+        let customNotes = '';
+        if (order.customAnswers && Object.keys(order.customAnswers).length > 0) {
+          customNotes = '<div class="text-xs text-muted mt-1">';
+          for (let k in order.customAnswers) {
+            customNotes += `<em>${escapeHtml(k)}:</em> ${escapeHtml(order.customAnswers[k])} `;
+          }
+          customNotes += '</div>';
+        }
+
+        tr.innerHTML = `
+          <td data-label="Order ID"><strong style="color:var(--primary);">${escapeHtml(order.orderId)}</strong></td>
+          <td data-label="Date & Time" class="text-xs">${formatDate(order.timestamp)}</td>
+          <td data-label="Buyer / Business">
+            <strong>${escapeHtml(order.buyerName)}</strong>
+            <div class="text-xs text-muted">${escapeHtml(order.businessName || '—')}</div>
+            <div class="text-xs text-muted">${escapeHtml(order.buyerEmail)}</div>
+          </td>
+          <td data-label="Contact">${escapeHtml(order.phone)}</td>
+          <td data-label="Items Summary">
+            <div class="text-xs">${itemsSummary}</div>
+            <div class="text-xs font-bold text-primary mt-1">Total: ${totalCartons} cartons</div>
+            ${customNotes}
+          </td>
+          <td data-label="Delivery Address" class="text-xs" style="max-width:200px;">${escapeHtml(order.address || '—')}</td>
+          <td data-label="Actions">
+            <div class="table-actions">
+              <button class="btn btn-sm btn-secondary" onclick="openEditOrderModal('${order.orderId}')" title="Edit details">✏️</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="handleDeleteOrderAction('${order.orderId}')" title="Delete order">🗑️</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterOrders() {
+      const q = document.getElementById('order-search').value.toLowerCase().trim();
+      if (!q) {
+        renderOrdersTable(state.orders);
+        return;
+      }
+      const filtered = state.orders.filter(o =>
+        o.orderId.toLowerCase().includes(q) ||
+        o.buyerName.toLowerCase().includes(q) ||
+        (o.businessName && o.businessName.toLowerCase().includes(q)) ||
+        o.buyerEmail.toLowerCase().includes(q) ||
+        (o.phone && o.phone.includes(q))
+      );
+      renderOrdersTable(filtered);
+    }
+
+    function openEditOrderModal(orderId) {
+      const order = state.orders.find(o => o.orderId === orderId);
+      if (!order) return;
+
+      document.getElementById('edit-order-id').value = order.orderId;
+      document.getElementById('edit-order-name').value = order.buyerName;
+      document.getElementById('edit-order-business').value = order.businessName || '';
+      document.getElementById('edit-order-phone').value = order.phone;
+      document.getElementById('edit-order-address').value = order.address || '';
+
+      showModal('modal-edit-order');
+    }
+
+    async function handleSaveOrderEdit(e) {
+      e.preventDefault();
+      const orderId = document.getElementById('edit-order-id').value;
+      const payload = {
+        buyerName: document.getElementById('edit-order-name').value.trim(),
+        businessName: document.getElementById('edit-order-business').value.trim(),
+        phone: document.getElementById('edit-order-phone').value.trim(),
+        address: document.getElementById('edit-order-address').value.trim()
+      };
+
+      showLoading();
+      const res = await updateOrder(orderId, payload);
+      hideLoading();
+
+      if (res.success) {
+        hideModal('modal-edit-order');
+        showToast('Order details updated', 'success');
+        await loadOrders();
+      } else {
+        showToast(res.error || 'Failed to update order', 'error');
+      }
+    }
+
+    async function handleDeleteOrderAction(orderId) {
+      const confirmed = await confirmAction(`Are you sure you want to delete order ${orderId}? This will remove it from the dashboard.`);
+      if (!confirmed) return;
+
+      showLoading();
+      const res = await deleteOrder(orderId);
+      hideLoading();
+
+      if (res.success) {
+        showToast('Order deleted', 'info');
+        await loadOrders();
+      } else {
+        showToast(res.error || 'Failed to delete order', 'error');
+      }
+    }
+
+    /* --- TAB 2: BUYERS --- */
+    async function loadBuyers() {
+      const res = await getBuyers();
+      if (res.success) {
+        state.buyers = res.buyers || [];
+        renderBuyersTable(state.buyers);
+        updateStats();
+      }
+    }
+
+    function renderBuyersTable(buyersList) {
+      const tbody = document.getElementById('buyers-tbody');
+      const empty = document.getElementById('buyers-empty');
+      tbody.innerHTML = '';
+
+      if (buyersList.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      buyersList.forEach(buyer => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="Contact Person"><strong>${escapeHtml(buyer.contactName)}</strong></td>
+          <td data-label="Business / Firm">${escapeHtml(buyer.businessName || '—')}</td>
+          <td data-label="Email (Username)"><code>${escapeHtml(buyer.email)}</code></td>
+          <td data-label="Phone">${escapeHtml(buyer.phone)}</td>
+          <td data-label="Status">
+            <span class="badge ${buyer.active ? 'badge-success' : 'badge-danger'}">
+              ${buyer.active ? 'Active' : 'Deactivated'}
+            </span>
+          </td>
+          <td data-label="Actions">
+            <div class="table-actions">
+              <button class="btn btn-sm btn-secondary" onclick="openEditBuyerModal('${buyer.id}')" title="Edit Details">✏️ Edit</button>
+              <button class="btn btn-sm btn-secondary" onclick="handleResendPasswordAction('${buyer.id}', '${escapeHtml(buyer.email)}')" title="Generate and email new password">🔑 Reset PW</button>
+              <button class="btn btn-sm ${buyer.active ? 'btn-outline-danger' : 'btn-outline'}" onclick="handleToggleBuyerStatus('${buyer.id}', ${buyer.active})">
+                ${buyer.active ? 'Deactivate' : 'Activate'}
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterBuyers() {
+      const q = document.getElementById('buyer-search').value.toLowerCase().trim();
+      if (!q) {
+        renderBuyersTable(state.buyers);
+        return;
+      }
+      const filtered = state.buyers.filter(b =>
+        (b.contactName && b.contactName.toLowerCase().includes(q)) ||
+        (b.businessName && b.businessName.toLowerCase().includes(q)) ||
+        (b.email && b.email.toLowerCase().includes(q)) ||
+        (b.phone && b.phone.includes(q))
+      );
+      renderBuyersTable(filtered);
+    }
+
+    function openAddBuyerModal() {
+      document.getElementById('modal-buyer-title').textContent = 'Add New Buyer Account';
+      document.getElementById('buyer-id').value = '';
+      document.getElementById('buyer-email').value = '';
+      document.getElementById('buyer-email').disabled = false;
+      document.getElementById('buyer-name').value = '';
+      document.getElementById('buyer-business').value = '';
+      document.getElementById('buyer-phone').value = '';
+      document.getElementById('buyer-address').value = '';
+      document.getElementById('buyer-password').value = '';
+      document.getElementById('buyer-password-confirm').value = '';
+      showModal('modal-buyer');
+    }
+
+    function openEditBuyerModal(buyerId) {
+      const buyer = state.buyers.find(b => b.id === buyerId);
+      if (!buyer) return;
+
+      document.getElementById('modal-buyer-title').textContent = 'Edit Buyer Account';
+      document.getElementById('buyer-id').value = buyer.id;
+      document.getElementById('buyer-email').value = buyer.email;
+      document.getElementById('buyer-email').disabled = true;
+      document.getElementById('buyer-name').value = buyer.contactName;
+      document.getElementById('buyer-business').value = buyer.businessName || '';
+      document.getElementById('buyer-phone').value = buyer.phone;
+      document.getElementById('buyer-address').value = buyer.address || '';
+      document.getElementById('buyer-password').value = '';
+      document.getElementById('buyer-password-confirm').value = '';
+      showModal('modal-buyer');
+    }
+
+    async function handleSaveBuyer(e) {
+      e.preventDefault();
+      const buyerId = document.getElementById('buyer-id').value;
+      const isEdit = !!buyerId;
+
+      const payload = {
+        email: document.getElementById('buyer-email').value.trim(),
+        contactName: document.getElementById('buyer-name').value.trim(),
+        businessName: document.getElementById('buyer-business').value.trim(),
+        phone: document.getElementById('buyer-phone').value.trim(),
+        address: document.getElementById('buyer-address').value.trim()
+      };
+
+      if (!isEdit) {
+        const password = document.getElementById('buyer-password').value;
+        const confirmPassword = document.getElementById('buyer-password-confirm').value;
+
+        if (password.length < 8) {
+          showToast('Password must be at least 8 characters long', 'error');
+          return;
+        }
+        if (password !== confirmPassword) {
+          showToast('Passwords do not match', 'error');
+          return;
+        }
+        payload.password = password;
+      }
+
+      if (!validatePhone(payload.phone)) {
+        showToast('Please enter a valid 10-digit phone number', 'error');
+        return;
+      }
+
+      showLoading();
+      let res;
+      if (isEdit) {
+        res = await updateBuyer(buyerId, payload);
+      } else {
+        res = await createBuyer(payload);
+      }
+      hideLoading();
+
+      if (res.success) {
+        hideModal('modal-buyer');
+        if (res.generatedPassword) {
+          showToast(`Account created! Generated Password: ${res.generatedPassword}`, 'success');
+        } else {
+          showToast(isEdit ? 'Buyer updated' : 'Buyer created', 'success');
+        }
+        await loadBuyers();
+      } else {
+        showToast(res.error || 'Operation failed', 'error');
+      }
+    }
+
+    async function handleToggleBuyerStatus(buyerId, currentStatus) {
+      const actionText = currentStatus ? 'deactivate' : 'activate';
+      const confirmed = await confirmAction(`Are you sure you want to ${actionText} this buyer account?`);
+      if (!confirmed) return;
+
+      showLoading();
+      const res = currentStatus ? await deactivateBuyer(buyerId) : await activateBuyer(buyerId);
+      hideLoading();
+
+      if (res.success) {
+        showToast(`Buyer ${actionText}d`, 'info');
+        await loadBuyers();
+      } else {
+        showToast(res.error || 'Failed to change status', 'error');
+      }
+    }
+
+    async function handleResendPasswordAction(buyerId, email) {
+      const confirmed = await confirmAction(`Generate a new password and resend to ${email}?`);
+      if (!confirmed) return;
+
+      showLoading();
+      const res = await resendPassword(buyerId);
+      hideLoading();
+
+      if (res.success) {
+        showToast(res.message || 'Password reset email sent!', 'success');
+      } else {
+        showToast(res.error || 'Failed to reset password', 'error');
+      }
+    }
+
+    /* --- TAB 3: PRODUCTS & CATEGORIES --- */
+    async function loadCategories() {
+      const res = await getCategories();
+      if (res.success) {
+        state.categories = res.categories || [];
+        renderCategoriesPills();
+        populateCategoryDropdown();
+      }
+    }
+
+    function renderCategoriesPills() {
+      const container = document.getElementById('categories-pill-list');
+      container.innerHTML = '';
+
+      state.categories.forEach(c => {
+        const pill = document.createElement('div');
+        pill.className = 'badge badge-primary p-2 flex items-center gap-xs';
+        pill.style.fontSize = '0.85rem';
+        pill.innerHTML = `
+          <span>${escapeHtml(c.name)}</span>
+          <button style="background:none;border:none;color:var(--primary);cursor:pointer;font-weight:bold;margin-left:4px;" onclick="openEditCategoryModal('${c.id}', '${escapeHtml(c.name)}')" title="Rename">✏️</button>
+          <button style="background:none;border:none;color:var(--danger);cursor:pointer;font-weight:bold;" onclick="handleDeleteCategoryAction('${c.id}')" title="Delete">&times;</button>
+        `;
+        container.appendChild(pill);
+      });
+    }
+
+    function populateCategoryDropdown() {
+      const select = document.getElementById('product-category');
+      select.innerHTML = '<option value="">-- Select Category --</option>';
+      state.categories.forEach(c => {
+        select.innerHTML += `<option value="${escapeHtml(c.name)}">${escapeHtml(c.name)}</option>`;
+      });
+    }
+
+    function openAddCategoryModal() {
+      document.getElementById('modal-category-title').textContent = 'Add Category';
+      document.getElementById('category-id').value = '';
+      document.getElementById('category-name').value = '';
+      showModal('modal-category');
+    }
+
+    function openEditCategoryModal(catId, currentName) {
+      document.getElementById('modal-category-title').textContent = 'Rename Category';
+      document.getElementById('category-id').value = catId;
+      document.getElementById('category-name').value = currentName;
+      showModal('modal-category');
+    }
+
+    async function handleSaveCategory(e) {
+      e.preventDefault();
+      const catId = document.getElementById('category-id').value;
+      const name = document.getElementById('category-name').value.trim();
+
+      showLoading();
+      let res;
+      if (catId) {
+        res = await updateCategory(catId, name);
+      } else {
+        res = await addCategory(name);
+      }
+      hideLoading();
+
+      if (res.success) {
+        hideModal('modal-category');
+        showToast(catId ? 'Category renamed' : 'Category added', 'success');
+        await loadCategories();
+        await loadProducts();
+      } else {
+        showToast(res.error || 'Failed to save category', 'error');
+      }
+    }
+
+    async function handleDeleteCategoryAction(catId) {
+      const confirmed = await confirmAction('Are you sure you want to delete this category?');
+      if (!confirmed) return;
+
+      showLoading();
+      const res = await deleteCategory(catId);
+      hideLoading();
+
+      if (res.success) {
+        showToast('Category deleted', 'info');
+        await loadCategories();
+      } else {
+        showToast(res.error || 'Cannot delete category', 'error');
+      }
+    }
+
+    async function loadProducts() {
+      const res = await getProducts('admin');
+      if (res.success) {
+        state.products = res.products || [];
+        renderProductsTable(state.products);
+      }
+    }
+
+    function renderProductsTable(productsList) {
+      const tbody = document.getElementById('products-tbody');
+      const empty = document.getElementById('products-empty');
+      tbody.innerHTML = '';
+
+      if (productsList.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      productsList.forEach(p => {
+        const tr = document.createElement('tr');
+        const sizesCount = (p.sizes || []).length;
+        const visibleSizesCount = (p.sizes || []).filter(s => s.visible).length;
+
+        tr.innerHTML = `
+          <td data-label="Product">
+            <div class="flex items-center gap-sm">
+              <img src="${p.image || getPlaceholderImage(p.name)}" alt="${escapeHtml(p.name)}" style="width:40px;height:40px;border-radius:var(--radius-sm);object-fit:cover;" onerror="this.src='${getPlaceholderImage(p.name)}'">
+              <strong>${escapeHtml(p.name)}</strong>
+            </div>
+          </td>
+          <td data-label="Category"><span class="badge badge-secondary">${escapeHtml(p.category)}</span></td>
+          <td data-label="Sizes">
+            <button class="btn btn-sm btn-ghost" onclick="openManageSizesModal('${p.id}')">
+              📦 ${sizesCount} size(s) (${visibleSizesCount} visible)
+            </button>
+          </td>
+          <td data-label="Visibility">
+            <label class="toggle" title="Toggle product visibility to buyers">
+              <input type="checkbox" ${p.visible ? 'checked' : ''} onchange="handleToggleProductVis('${p.id}')">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="text-xs text-muted ml-1">${p.visible ? 'Visible' : 'Hidden'}</span>
+          </td>
+          <td data-label="Stock">
+            <label class="toggle" title="Toggle out of stock flag">
+              <input type="checkbox" ${p.inStock ? 'checked' : ''} onchange="handleToggleProductStockAction('${p.id}')">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="text-xs ${p.inStock ? 'text-success' : 'text-danger'} ml-1">${p.inStock ? 'In Stock' : 'Out of Stock'}</span>
+          </td>
+          <td data-label="Actions">
+            <div class="table-actions">
+              <button class="btn btn-sm btn-secondary" onclick="openManageSizesModal('${p.id}')" title="Manage Sizes & MOQs">⚙️ Sizes</button>
+              <button class="btn btn-sm btn-secondary" onclick="openEditProductModal('${p.id}')" title="Edit Product">✏️</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="handleDeleteProductAction('${p.id}')" title="Delete Product">🗑️</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function handleToggleProductVis(productId) {
+      showLoading();
+      const res = await toggleProductVisibility(productId);
+      hideLoading();
+      if (res.success) {
+        showToast(res.visible ? 'Product is now visible to buyers' : 'Product hidden from buyers', 'info');
+        await loadProducts();
+      }
+    }
+
+    async function handleToggleProductStockAction(productId) {
+      showLoading();
+      const res = await toggleProductStock(productId);
+      hideLoading();
+      if (res.success) {
+        showToast(res.inStock ? 'Product marked in stock' : 'Product marked out of stock', 'info');
+        await loadProducts();
+      }
+    }
+
+    function openAddProductModal() {
+      document.getElementById('modal-product-title').textContent = 'Add New Product';
+      document.getElementById('product-id').value = '';
+      document.getElementById('product-name').value = '';
+      document.getElementById('product-category').value = '';
+      document.getElementById('product-image').value = '';
+      document.getElementById('product-sizes-section').classList.remove('hidden');
+
+      const sizesContainer = document.getElementById('product-sizes-container');
+      sizesContainer.innerHTML = '';
+      addProductSizeRow();
+
+      showModal('modal-product');
+    }
+
+    function openEditProductModal(productId) {
+      const prod = state.products.find(p => p.id === productId);
+      if (!prod) return;
+
+      document.getElementById('modal-product-title').textContent = 'Edit Product Details';
+      document.getElementById('product-id').value = prod.id;
+      document.getElementById('product-name').value = prod.name;
+      document.getElementById('product-category').value = prod.category;
+      document.getElementById('product-image').value = prod.image || '';
+      document.getElementById('product-sizes-section').classList.add('hidden');
+
+      showModal('modal-product');
+    }
+
+    function addProductSizeRow() {
+      const container = document.getElementById('product-sizes-container');
+      const row = document.createElement('div');
+      row.className = 'form-row mb-1 p-2 size-input-row';
+      row.style.background = 'var(--bg-off-white)';
+      row.style.borderRadius = 'var(--radius)';
+      row.innerHTML = `
+        <div class="form-group" style="flex:2;">
+          <input type="text" class="form-control form-control-sm size-pack-input" placeholder="Pack Spec (e.g. 40gm/pkt)" required>
+        </div>
+        <div class="form-group" style="flex:1;">
+          <input type="number" class="form-control form-control-sm size-units-input" placeholder="Pkts/ctn (40)" required min="1">
+        </div>
+        <div class="form-group" style="flex:1;">
+          <input type="number" class="form-control form-control-sm size-moq-input" placeholder="MOQ (5)" required min="1" value="1">
+        </div>
+        <button type="button" class="btn btn-sm btn-ghost text-danger" onclick="this.parentElement.remove()" title="Remove row" style="align-self:center;">✕</button>
+      `;
+      container.appendChild(row);
+    }
+
+    async function handleSaveProduct(e) {
+      e.preventDefault();
+      const productId = document.getElementById('product-id').value;
+      const isEdit = !!productId;
+
+      const payload = {
+        name: document.getElementById('product-name').value.trim(),
+        category: document.getElementById('product-category').value,
+        image: document.getElementById('product-image').value.trim()
+      };
+
+      if (!isEdit) {
+        const sizeRows = document.querySelectorAll('.size-input-row');
+        const sizes = [];
+        sizeRows.forEach(r => {
+          const packDesc = r.querySelector('.size-pack-input').value.trim();
+          const units = parseInt(r.querySelector('.size-units-input').value, 10);
+          const moq = parseInt(r.querySelector('.size-moq-input').value, 10) || 1;
+          if (packDesc && units > 0) {
+            sizes.push({ packDesc, unitsPerCarton: units, moq });
+          }
+        });
+        if (sizes.length === 0) {
+          showToast('Please add at least one size variant', 'warning');
+          return;
+        }
+        payload.sizes = sizes;
+      }
+
+      showLoading();
+      let res;
+      if (isEdit) {
+        res = await updateProduct(productId, payload);
+      } else {
+        res = await addProduct(payload);
+      }
+      hideLoading();
+
+      if (res.success) {
+        hideModal('modal-product');
+        showToast(isEdit ? 'Product updated' : 'Product created', 'success');
+        await loadProducts();
+      } else {
+        showToast(res.error || 'Failed to save product', 'error');
+      }
+    }
+
+    async function handleDeleteProductAction(productId) {
+      const confirmed = await confirmAction('Are you sure you want to delete this product? All its sizes will also be removed.');
+      if (!confirmed) return;
+
+      showLoading();
+      const res = await deleteProduct(productId);
+      hideLoading();
+
+      if (res.success) {
+        showToast('Product deleted', 'info');
+        await loadProducts();
+      } else {
+        showToast(res.error || 'Failed to delete product', 'error');
+      }
+    }
+
+    function openManageSizesModal(productId) {
+      const prod = state.products.find(p => p.id === productId);
+      if (!prod) return;
+
+      document.getElementById('manage-sizes-product-id').value = prod.id;
+      document.getElementById('manage-sizes-product-name').textContent = `${prod.name} (${prod.category})`;
+      document.getElementById('new-size-pack').value = '';
+      document.getElementById('new-size-units').value = '';
+      document.getElementById('new-size-moq').value = '1';
+
+      renderManageSizesTable(prod);
+      showModal('modal-manage-sizes');
+    }
+
+    function renderManageSizesTable(prod) {
+      const tbody = document.getElementById('manage-sizes-tbody');
+      tbody.innerHTML = '';
+
+      if (!prod.sizes || prod.sizes.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted p-2">No sizes configured yet.</td></tr>';
+        return;
+      }
+
+      prod.sizes.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(s.packDesc)}</strong></td>
+          <td>${s.unitsPerCarton} units/ctn</td>
+          <td>${s.moq} cartons</td>
+          <td>
+            <label class="toggle">
+              <input type="checkbox" ${s.visible ? 'checked' : ''} onchange="handleToggleSizeVis('${prod.id}', '${s.id}')">
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+          <td>
+            <label class="toggle">
+              <input type="checkbox" ${s.inStock ? 'checked' : ''} onchange="handleToggleSizeStockAction('${prod.id}', '${s.id}')">
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" onclick="handleDeleteSizeAction('${prod.id}', '${s.id}')" title="Delete size">🗑️</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function handleAddSingleSize() {
+      const productId = document.getElementById('manage-sizes-product-id').value;
+      const packDesc = document.getElementById('new-size-pack').value.trim();
+      const units = parseInt(document.getElementById('new-size-units').value, 10);
+      const moq = parseInt(document.getElementById('new-size-moq').value, 10) || 1;
+
+      if (!packDesc || isNaN(units) || units <= 0) {
+        showToast('Please enter valid pack description and units per carton', 'warning');
+        return;
+      }
+
+      showLoading();
+      const res = await addSize(productId, { packDesc, unitsPerCarton: units, moq });
+      hideLoading();
+
+      if (res.success) {
+        showToast('Size variant added', 'success');
+        document.getElementById('new-size-pack').value = '';
+        document.getElementById('new-size-units').value = '';
+        document.getElementById('new-size-moq').value = '1';
+        await loadProducts();
+        const updatedProd = state.products.find(p => p.id === productId);
+        renderManageSizesTable(updatedProd);
+      } else {
+        showToast(res.error || 'Failed to add size', 'error');
+      }
+    }
+
+    async function handleToggleSizeVis(productId, sizeId) {
+      showLoading();
+      const res = await toggleSizeVisibility(productId, sizeId);
+      hideLoading();
+      if (res.success) {
+        await loadProducts();
+      }
+    }
+
+    async function handleToggleSizeStockAction(productId, sizeId) {
+      showLoading();
+      const res = await toggleSizeStock(productId, sizeId);
+      hideLoading();
+      if (res.success) {
+        await loadProducts();
+      }
+    }
+
+    async function handleDeleteSizeAction(productId, sizeId) {
+      const confirmed = await confirmAction('Are you sure you want to delete this size variant?');
+      if (!confirmed) return;
+
+      showLoading();
+      const res = await deleteSize(productId, sizeId);
+      hideLoading();
+
+      if (res.success) {
+        showToast('Size variant deleted', 'info');
+        await loadProducts();
+        const updatedProd = state.products.find(p => p.id === productId);
+        renderManageSizesTable(updatedProd);
+      } else {
+        showToast(res.error || 'Failed to delete size', 'error');
+      }
+    }
+
+    /* --- TAB 4: CHECKOUT SETTINGS (QUESTIONS) --- */
+    async function loadQuestions() {
+      const res = await getQuestions();
+      if (res.success) {
+        state.questions = res.questions || [];
+        renderQuestionsTable(state.questions);
+      }
+    }
+
+    function renderQuestionsTable(qList) {
+      const tbody = document.getElementById('questions-tbody');
+      const empty = document.getElementById('questions-empty');
+      tbody.innerHTML = '';
+
+      if (qList.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      qList.forEach(q => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(q.label)}</strong></td>
+          <td><span class="badge badge-secondary">${q.type === 'dropdown' ? 'Dropdown' : 'Text Input'}</span></td>
+          <td class="text-xs text-muted">${q.type === 'dropdown' ? (q.options || []).join(', ') : '—'}</td>
+          <td><span class="badge ${q.required ? 'badge-danger' : 'badge-secondary'}">${q.required ? 'Required' : 'Optional'}</span></td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-sm btn-secondary" onclick="openEditQuestionModal('${q.id}')">✏️ Edit</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="handleDeleteQuestionAction('${q.id}')">🗑️</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function toggleQuestionOptions() {
+      const type = document.getElementById('question-type').value;
+      const grp = document.getElementById('question-options-group');
+      grp.classList.toggle('hidden', type !== 'dropdown');
+    }
+
+    function openAddQuestionModal() {
+      document.getElementById('modal-question-title').textContent = 'Add Checkout Question';
+      document.getElementById('question-id').value = '';
+      document.getElementById('question-label').value = '';
+      document.getElementById('question-type').value = 'text';
+      document.getElementById('question-options').value = '';
+      document.getElementById('question-required').checked = false;
+      toggleQuestionOptions();
+      showModal('modal-question');
+    }
+
+    function openEditQuestionModal(qId) {
+      const q = state.questions.find(x => x.id === qId);
+      if (!q) return;
+
+      document.getElementById('modal-question-title').textContent = 'Edit Checkout Question';
+      document.getElementById('question-id').value = q.id;
+      document.getElementById('question-label').value = q.label;
+      document.getElementById('question-type').value = q.type;
+      document.getElementById('question-options').value = (q.options || []).join(', ');
+      document.getElementById('question-required').checked = !!q.required;
+      toggleQuestionOptions();
+      showModal('modal-question');
+    }
+
+    async function handleSaveQuestion(e) {
+      e.preventDefault();
+      const qId = document.getElementById('question-id').value;
+      const isEdit = !!qId;
+      const type = document.getElementById('question-type').value;
+      const optionsRaw = document.getElementById('question-options').value;
+
+      const payload = {
+        label: document.getElementById('question-label').value.trim(),
+        type: type,
+        options: type === 'dropdown' ? optionsRaw.split(',').map(s => s.trim()).filter(Boolean) : [],
+        required: document.getElementById('question-required').checked
+      };
+
+      showLoading();
+      let res;
+      if (isEdit) {
+        res = await updateQuestion(qId, payload);
+      } else {
+        res = await addQuestion(payload);
+      }
+      hideLoading();
+
+      if (res.success) {
+        hideModal('modal-question');
+        showToast(isEdit ? 'Question updated' : 'Question added', 'success');
+        await loadQuestions();
+      } else {
+        showToast(res.error || 'Failed to save question', 'error');
+      }
+    }
+
+    async function handleDeleteQuestionAction(qId) {
+      const confirmed = await confirmAction('Are you sure you want to delete this checkout question?');
+      if (!confirmed) return;
+
+      showLoading();
+      const res = await deleteQuestion(qId);
+      hideLoading();
+
+      if (res.success) {
+        showToast('Question deleted', 'info');
+        await loadQuestions();
+      } else {
+        showToast(res.error || 'Failed to delete question', 'error');
+      }
+    }
+  </script>
+</body>
+</html>
